@@ -171,8 +171,8 @@ public class DispatcherServlet extends HttpServlet {
         req.getRequestURL();
         Method method = (Method)handerMaping.get(servletPath);
         if (method == null) {
-            PrintWriter print = resp.getWriter();
             resp.setCharacterEncoding("utf-8");
+            PrintWriter print = resp.getWriter();
             print.print("无对应方法");
             print.flush();
             print.close();
