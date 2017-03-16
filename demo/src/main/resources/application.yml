@@ -1,0 +1,17 @@
+#mybatis:
+#  mapperLocations: classpath:mappers/*Mapper.xml
+#  configuration:
+#    logImpl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+#    mapUnderscoreToCamelCase: true
+spring:
+  profiles:
+    active: dev
+
+logging:
+  level:
+    com:
+      fangxp: debug
+    java:
+      sql: DEBUG
+    org:
+      springframework: info
