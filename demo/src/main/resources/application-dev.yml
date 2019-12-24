@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/micheal?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&useSSL=true&verifyServerCertificate=false
+    username: root
+    password: 123456
+    initialSize:  2
+    minIdle:  2
+    maxActive:  10
+    maxWait:  60000
+    timeBetweenEvictionRunsMillis:  60000
+    minEvictableIdleTimeMillis:  300000
+    validationQuery:  SELECT 'x'
+    testWhileIdle:  true
+    testOnBorrow:  false
+    testOnReturn:  false
+    poolPreparedStatements:  true
+    maxPoolPreparedStatementPerConnectionSize:  20
+  activemq:
+    broker-url: tcp://192.168.79.187:61616
+    packages:
+      trust-all: true
+    user:
+    password:
