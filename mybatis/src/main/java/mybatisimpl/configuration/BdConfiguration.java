@@ -1,8 +1,5 @@
 package mybatisimpl.configuration;
 
-import mybatisimpl.excutor.BdExecutor;
-import mybatisimpl.excutor.BdSimpleExcutor;
-import mybatisimpl.mapper.BdMapperData;
 import mybatisimpl.mapper.BdMapperRegistory;
 
 import java.io.IOException;
@@ -15,15 +12,16 @@ import java.util.Properties;
 public class BdConfiguration {
 
     //配置
-    Properties properties = new Properties();
+    Properties configProperties = new Properties();
+
+    Properties mapperProperties = new Properties();
 
     private String configPath;
 
     private BdDataSource bdDataSource;
 
-    private BdExecutor bdExecutor = new BdSimpleExcutor();
 
-    private BdMapperRegistory bdMapperRegistory;
+    private BdMapperRegistory bdMapperRegistory  ;
 
     public BdConfiguration(String configPath) {
         this.configPath = configPath;
@@ -46,14 +44,14 @@ public class BdConfiguration {
 
     private void loadMapperRegistory() {
         scanMapperLocation();
-
-        bdMapperRegistory.loadMapperRegistory(properties);
+        bdMapperRegistory = new BdMapperRegistory();
+        bdMapperRegistory.loadMapperRegistory(mapperProperties);
 
 
     }
 
     private void scanMapperLocation() {
-        String mapperLocation = properties.getProperty("mapperLocation");
+        String mapperLocation = configProperties.getProperty("mapperLocation");
 
         if (mapperLocation == null) {
             throw new RuntimeException("mapperLocation is null");
@@ -61,7 +59,7 @@ public class BdConfiguration {
 
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(mapperLocation);
         try {
-            this.properties.load(inputStream);
+            this.mapperProperties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,10 +68,10 @@ public class BdConfiguration {
     private void initDateSource() {
 
         bdDataSource = new BdDataSource();
-        bdDataSource.setDriver(properties.getProperty("jdbc.driver"));
-        bdDataSource.setUrl(properties.getProperty("jdbc.url"));
-        bdDataSource.setUserName(properties.getProperty("jdbc.username"));
-        bdDataSource.setPassWord(properties.getProperty("jdbc.password"));
+        bdDataSource.setDriver(configProperties.getProperty("jdbc.driver"));
+        bdDataSource.setUrl(configProperties.getProperty("jdbc.url"));
+        bdDataSource.setUserName(configProperties.getProperty("jdbc.userName"));
+        bdDataSource.setPassWord(configProperties.getProperty("jdbc.passWord"));
 
     }
 
@@ -87,7 +85,7 @@ public class BdConfiguration {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(configPath);
 
         try {
-            properties.load(inputStream);
+            configProperties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,11 +100,11 @@ public class BdConfiguration {
         this.bdDataSource = bdDataSource;
     }
 
-    public BdExecutor getBdExecutor() {
-        return bdExecutor;
+    public BdMapperRegistory getBdMapperRegistory() {
+        return bdMapperRegistory;
     }
 
-    public void setBdExecutor(BdExecutor bdExecutor) {
-        this.bdExecutor = bdExecutor;
+    public void setBdMapperRegistory(BdMapperRegistory bdMapperRegistory) {
+        this.bdMapperRegistory = bdMapperRegistory;
     }
 }

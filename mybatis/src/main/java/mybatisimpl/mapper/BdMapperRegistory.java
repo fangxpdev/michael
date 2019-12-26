@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class BdMapperRegistory {
 
-    public static final Map<String, BdMapperData> sqlMappings = new HashMap<>();
+    private final Map<String, BdMapperData> sqlMappings = new HashMap<>();
 
     public void loadMapperRegistory(Properties properties) {
 
@@ -22,16 +22,17 @@ public class BdMapperRegistory {
             String[] sqlContent = content.split("#");
 
             String sql = sqlContent[0];
-//            String parameterType =
+            String resultType = sqlContent[1];
 
-//            BdMapperData bdMapperData = new BdMapperData();
+            BdMapperData bdMapperData = new BdMapperData(sql, resultType, null);
 
-
-
+            sqlMappings.put(key, bdMapperData);
 
         }
 
     }
 
-
+    public Map<String, BdMapperData> getSqlMappings() {
+        return sqlMappings;
+    }
 }

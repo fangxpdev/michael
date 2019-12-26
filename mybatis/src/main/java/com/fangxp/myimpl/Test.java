@@ -6,13 +6,6 @@ import mybatisimpl.configuration.BdConfiguration;
 import mybatisimpl.session.BdSqlSession;
 import mybatisimpl.session.BdSqlSessionFactory;
 import mybatisimpl.session.BdSqlSessionFactoryBuilder;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import java.io.InputStream;
 
 public class Test {
 
