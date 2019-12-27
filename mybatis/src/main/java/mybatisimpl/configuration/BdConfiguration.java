@@ -1,6 +1,10 @@
 package mybatisimpl.configuration;
 
+import mybatisimpl.excutor.BdExecutor;
+import mybatisimpl.excutor.BdSimpleExecutor;
 import mybatisimpl.mapper.BdMapperRegistory;
+import mybatisimpl.plugin.BdInterceptor;
+import mybatisimpl.plugin.BdInterceptorChain;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,12 +20,25 @@ public class BdConfiguration {
 
     Properties mapperProperties = new Properties();
 
+    /**
+     * 配置文件位置
+     */
     private String configPath;
 
+    /**
+     * 数据源配置
+     */
     private BdDataSource bdDataSource;
 
+    /**
+     * mapper缓存
+     */
+    private BdMapperRegistory bdMapperRegistory;
 
-    private BdMapperRegistory bdMapperRegistory  ;
+    /**
+     * 拦截器链
+     */
+    private BdInterceptorChain bdInterceptorChain = new BdInterceptorChain();
 
     public BdConfiguration(String configPath) {
         this.configPath = configPath;
@@ -38,6 +55,9 @@ public class BdConfiguration {
 
         //3. mapper
         loadMapperRegistory();
+
+        //3.加载plugin
+        loadInterceptor();
 
 
     }
@@ -92,6 +112,33 @@ public class BdConfiguration {
 
     }
 
+    private void loadInterceptor() {
+
+        String inter = configProperties.getProperty("intercepters");
+        if (inter != null) {
+            String[] interceptors = inter.split(",");
+            for (String interceptor : interceptors) {
+
+                try {
+                    Class<?> clazz = Class.forName(interceptor);
+                    bdInterceptorChain.addInterceptor((BdInterceptor) clazz.newInstance());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
+
+
+    public BdExecutor newExecutor() {
+
+        BdExecutor executor = new BdSimpleExecutor(this);
+
+        return (BdExecutor) bdInterceptorChain.pluginAll(executor);
+    }
+
     public BdDataSource getBdDataSource() {
         return bdDataSource;
     }
@@ -106,5 +153,13 @@ public class BdConfiguration {
 
     public void setBdMapperRegistory(BdMapperRegistory bdMapperRegistory) {
         this.bdMapperRegistory = bdMapperRegistory;
+    }
+
+    public BdInterceptorChain getBdInterceptorChain() {
+        return bdInterceptorChain;
+    }
+
+    public void setBdInterceptorChain(BdInterceptorChain bdInterceptorChain) {
+        this.bdInterceptorChain = bdInterceptorChain;
     }
 }

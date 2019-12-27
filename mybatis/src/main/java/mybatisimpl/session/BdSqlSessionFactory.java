@@ -18,7 +18,7 @@ public class BdSqlSessionFactory {
 
     public BdSqlSession openSession() {
 
-        BdExecutor bdExecutor = new BdSimpleExecutor(bdConfiguration);
+        BdExecutor bdExecutor = this.bdConfiguration.newExecutor();
 
         return new BdSqlSession(bdConfiguration, bdExecutor);
     }

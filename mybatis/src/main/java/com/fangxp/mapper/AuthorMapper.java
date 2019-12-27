@@ -18,7 +18,7 @@ package com.fangxp.mapper;
 
 import com.fangxp.domain.Author;
 import org.apache.ibatis.annotations.Select;
-import sun.plugin2.main.server.ResultHandler;
+import org.apache.ibatis.session.ResultHandler;
 
 import java.util.*;
 

@@ -38,6 +38,7 @@ public class BdSimpleExecutor implements BdExecutor {
 
             resultSet = preparedStatement.executeQuery();
 
+            //结果处理
             while (resultSet.next()) {
 
                 String resultType = bdMapperData.getResultType();
