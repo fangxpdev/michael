@@ -3,6 +3,11 @@ package com.fangxp.concurrent.c1;
 public class SingletonObject5 {
 
     private SingletonObject5() {
+
+        if (InstanceHolder.instance != null) {
+            throw new RuntimeException("不允许实例化多次");
+        }
+
     }
 
     /**

@@ -19,7 +19,7 @@ public class SingletonObject4 {
      *
      * @return
      */
-    public static SingletonObject3 getInstance() {
+    public static SingletonObject4 getInstance() {
 
         if (null == instance) {
             synchronized (SingletonObject4.class) {
@@ -29,7 +29,7 @@ public class SingletonObject4 {
             }
         }
 
-        return SingletonObject3.getInstance();
+        return instance;
 
     }
 

@@ -26,7 +26,7 @@ public class SingletonObject3 {
             }
         }
 
-        return SingletonObject3.getInstance();
+        return instance;
 
     }
 
