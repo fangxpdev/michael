@@ -10,7 +10,7 @@
                 <property name="driver" value="com.mysql.jdbc.Driver" />
                 <property name="url" value="jdbc:mysql://192.168.1.13:3306/test?characterEncoding=utf-8" />
                 <property name="username" value="tbj" />
-                <property name="password" value="tbj900900" />
+                <property name="password" value="密码" />
             </dataSource>
         </environment>
     </environments>
